@@ -1,4 +1,3 @@
-"""Module providing a function parsing regex."""
 import re
 
 with open('1.txt', 'r', encoding="utf-8") as fp:
