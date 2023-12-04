@@ -17,6 +17,4 @@ for line in lines:
         for y in range(cardindex + 1, cardindex + matches + 1):
             cardcounter[y] += 1
 
-    
-print(cardcounter)
 print(sum(cardcounter))
