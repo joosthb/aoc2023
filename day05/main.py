@@ -1,3 +1,5 @@
+from pprint import pprint
+
 class Almanac:
     _map = {}
     _seeds = []
@@ -29,7 +31,7 @@ class Almanac:
         Function to map source id to destination id using almanac chapter map
         '''
         for map in self._map[chapter]:
-            if map[1] < sourceid < (map[1] + map[2]):
+            if map[1] <= sourceid <= (map[1] + map[2]):
                 return sourceid - map[1] + map[0]
         return sourceid
     
@@ -42,8 +44,19 @@ class Almanac:
 
 
 if __name__ == "__main__":
-    with open('input', 'r', encoding="utf-8") as fp:
+    with open('testinput', 'r', encoding="utf-8") as fp:
         lines = fp.read().splitlines()
     almanac = Almanac(lines)
+    # Part 1
     locations = [almanac.seedtolocation(seed) for seed in almanac.seeds]
-    print(f'Shortest route from seed to location: %d' % min(locations))
+    print(f'Part1, Shortest route from seed to location: %d' % min(locations))
+
+
+    # Part 2
+    seeds = []
+    for i, seed in enumerate(almanac.seeds):
+        if i%2:
+            seeds += [x for x in range(almanac.seeds[i-1], seed+almanac.seeds[i-1])]
+
+    locations = [almanac.seedtolocation(seed) for seed in seeds]
+    print(f'Part2, Shortest route from seed to location: %d' % min(locations))
