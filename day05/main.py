@@ -53,10 +53,15 @@ if __name__ == "__main__":
 
 
     # Part 2
-    seeds = []
+    lowest = None
     for i, seed in enumerate(almanac.seeds):
         if i%2:
-            seeds += [x for x in range(almanac.seeds[i-1], seed+almanac.seeds[i-1])]
+            j = almanac.seeds[i-1]
+            while j < seed+almanac.seeds[i-1]:
+                if lowest:
+                    lowest = min(almanac.seedtolocation(j), lowest)
+                else:
+                    lowest = almanac.seedtolocation(j)
+                j += 1
 
-    locations = [almanac.seedtolocation(seed) for seed in seeds]
-    print(f'Part2, Shortest route from seed to location: %d' % min(locations))
+    print(f'Part2, Shortest route from seed to location: %d' % lowest)
