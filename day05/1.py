@@ -23,7 +23,7 @@ class Almanac:
     @property
     def map(self) -> dict:
         return self._map
-    
+
     def _sourcetodest(self, chapter: str, sourceid: int) -> int:
         '''
         Function to map source id to destination id using almanac chapter map
