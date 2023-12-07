@@ -1,4 +1,4 @@
-from pprint import pprint
+from functools import cached_property 
 
 class Almanac:
     _map = {}
@@ -18,6 +18,29 @@ class Almanac:
                 if line != '':
                     # dest, source, length
                     self._map[currentchapter] += [[int(x) for x in line.split(' ')]]
+
+    @cached_property
+    def seedranges(self)-> list[tuple[int, int]]:
+        seedsranges: list[tuple[int, int]] = []
+        for i in range(int(len(self._seeds))):
+            if i%2:
+                seedsranges.append((self._seeds[i-1], self._seeds[i]))
+        return seedsranges
+    
+    @cached_property
+    def rangemaps(self):
+        ''' eats map and creates list of rangerules: from, to, rule'''
+        rulemap = []
+        for x, map in enumerate(self._map):
+            # rulemap[x] = []
+            # seeds needed
+            if x == 0:
+                for seedrange in self.seedranges:
+                    for rule in self._map[map]:
+                        print(rule)
+            else:
+                print(x, self._map[map])
+
     @property
     def seeds(self) -> list[int]:
         return self._seeds
@@ -51,6 +74,11 @@ if __name__ == "__main__":
     locations = [almanac.seedtolocation(seed) for seed in almanac.seeds]
     print(f'Part1, Shortest route from seed to location: %d' % min(locations))
 
+    print(almanac.seedranges)
+    print(almanac.map)
+    print(almanac.rangemaps)
+
+    exit()
 
     # Part 2
     lowest = None
